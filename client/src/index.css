@@ -1,0 +1,145 @@
+/* /R:/Web development/Projects/Lexical Analyzer/client/src/index.css
+  Dark theme for Lexical Analyzer app
+*/
+
+/* Color palette */
+:root{
+  --bg: #061017;
+  --surface: #0e1620;
+  --muted: #9aa6b2;
+  --text: #e6f0f5;
+  --accent: #60a5fa;
+  --accent-2: #7dd3fc;
+  --success: #7bd389;
+  --danger: #ff7b7b;
+  --glass: rgba(255,255,255,0.03);
+}
+
+/* Reset / base */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, var(--bg) 0%, #03121a 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+}
+
+/* App container */
+.app {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 20px;
+}
+
+/* Header with background and built-in title "Lexical analyzer" */
+.app-header{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 24px;
+  border-radius: 12px;
+  background:
+   linear-gradient(120deg, rgba(96,165,250,0.06), rgba(125,211,252,0.03)),
+   linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+}
+
+/* The visible header title inserted by CSS (safe if your HTML already has a <h1> — will not duplicate visually if you prefer) */
+.app-header::before{
+  content: "Lexical analyzer";
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--accent-2);
+  letter-spacing: 0.3px;
+  text-transform: none;
+  display: block;
+  margin-right: auto;
+}
+
+/* Optional subtitle inside header (if you add .subtitle element) */
+.app-header .subtitle{
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+
+/* Panels / cards */
+.card{
+  background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.01));
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+  margin-top: 18px;
+}
+
+/* Inputs & textarea */
+textarea, input[type="text"], .editor {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+  padding: 12px;
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Buttons */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #041022;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(96,165,250,0.12);
+}
+.btn.ghost{
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+  box-shadow: none;
+}
+
+/* Token highlighting for lexical output */
+.token { font-family: ui-monospace, "Roboto Mono", monospace; }
+.token.keyword { color: #ffd580; }     /* keywords */
+.token.identifier { color: var(--text); } /* identifiers */
+.token.number { color: #ffb86b; }
+.token.string { color: var(--success); }
+.token.operator { color: #93c5fd; }
+.token.comment { color: #6b7280; font-style: italic; }
+
+/* Results / stream list */
+.tokens-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+/* Small utilities */
+.kv { color: var(--muted); font-size: 0.9rem; }
+.small { font-size: 0.85rem; color: var(--muted); }
+
+/* Responsive */
+@media (max-width: 640px){
+  .app { padding: 12px; }
+  .app-header{ padding: 16px; border-radius: 10px; }
+  .app-header::before { font-size: 1.05rem; }
+}
