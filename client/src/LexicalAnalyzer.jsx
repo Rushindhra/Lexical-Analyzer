@@ -341,7 +341,7 @@ export default function CompilerAnalyzer() {
     const analyzeWithAI = async (sourceCode, lang) => {
         setIsAnalyzing(true);
         try {
-             const response = await fetch(`https://lexical-analyzer-hw4z.onrender.com`, {
+             const response = await fetch(`https://lexical-analyzer-hw4z.onrender.com/api/analyze`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
