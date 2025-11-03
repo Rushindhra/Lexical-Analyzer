@@ -18,7 +18,7 @@ app.post("/api/analyze", async (req, res) => {
       - Possible errors or inefficiencies
       - Code improvements
       - Suggestions for optimization
-
+      - Find the errors and fix the code
       Code:
       ${code}
     `;
@@ -38,3 +38,4 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`✅ Server running on http://localhost:${port}`);
 });
+
