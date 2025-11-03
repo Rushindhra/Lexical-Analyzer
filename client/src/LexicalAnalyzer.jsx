@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 const LANGUAGE_KEYWORDS = {
     c: new Set([
         "auto", "break", "case", "char", "const", "continue", "default", "do",
@@ -516,40 +520,111 @@ export default function CompilerAnalyzer() {
                 </div>
 
                 <div>
-                    <h3 style={{ margin: "0 0 12px 0", fontSize: 16, fontWeight: 600, color: "#91a7e2ff" }}>
-                        Analysis Report {isAnalyzing && "🤔"}
+                   <h3
+  style={{
+    margin: "0 0 12px 0",
+    fontSize: 16,
+    fontWeight: 600,
+    color: "#91a7e2ff",
+  }}
+>
+  Analysis Report {isAnalyzing && "🤔"}
+</h3>
+
+<div
+  style={{
+    whiteSpace: "pre-wrap",
+    background: "#01021dff",
+    border: "1px solid #c5cee0ff",
+    padding: 12,
+    borderRadius: 6,
+    minHeight: 180,
+    maxHeight: 400,
+    overflow: "auto",
+    fontSize: 14,
+    lineHeight: 1.6,
+    color: "#b6bdc9ff",
+  }}
+>
+  {isAnalyzing ? (
+    "AI is analyzing your code..."
+  ) : analysis || aiAnalysis ? (
+    <>
+      {analysis && <p>{analysis}</p>}
+
+      {aiAnalysis && (
+        <>
+          <strong style={{ color: "#c9d1d9" }}>AI Analysis:</strong>
+          <div style={{ marginTop: 8 }}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code({ node, inline, className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      style={oneDark}
+                      language={match[1]}
+                      PreTag="div"
+                      customStyle={{
+                        background: "#0b0f2c",
+                        borderRadius: "6px",
+                        fontSize: "13px",
+                        padding: "10px",
+                      }}
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, "")}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code
+                      style={{
+                        backgroundColor: "#202540",
+                        padding: "2px 5px",
+                        borderRadius: "4px",
+                        color: "#d1e8ff",
+                      }}
+                      {...props}
+                    >
+                      {children}
+                    </code>
+                  );
+                },
+                h3({ children }) {
+                  return (
+                    <h3 style={{ color: "#91a7e2ff", fontSize: 15, marginTop: 12 }}>
+                      {children}
                     </h3>
-                    <div style={{ 
-                        whiteSpace: "pre-wrap", 
-                        background: "#01021dff", 
-                        border: "1px solid #c5cee0ff", 
-                        padding: 12, 
-                        borderRadius: 6, 
-                        minHeight: 180,
-                        maxHeight: 400,
-                        overflow: "auto",
-                        fontSize: 14,
-                        lineHeight: 1.6,
-                        color: "#b6bdc9ff"
-                    }}>
-                        {isAnalyzing ? (
-                            "AI is analyzing your code..."
-                        ) : analysis || aiAnalysis ? (
-                            <>
-                                {analysis}
-                                {aiAnalysis && (
-                                    <>
-                                        {"\n\n"}
-                                        <strong>AI Analysis:</strong>
-                                        {"\n"}
-                                        {aiAnalysis}
-                                    </>
-                                )}
-                            </>
-                        ) : (
-                            <span style={{ color: "#9ca3af" }}>Analysis results will appear here after you click Analyze.</span>
-                        )}
-                    </div>
+                  );
+                },
+                strong({ children }) {
+                  return (
+                    <strong style={{ color: "#e2e6f0", fontWeight: 600 }}>
+                      {children}
+                    </strong>
+                  );
+                },
+                li({ children }) {
+                  return (
+                    <li style={{ marginBottom: "4px", listStyleType: "disc", marginLeft: "16px" }}>
+                      {children}
+                    </li>
+                  );
+                },
+              }}
+            >
+              {aiAnalysis}
+            </ReactMarkdown>
+          </div>
+        </>
+      )}
+    </>
+  ) : (
+    <span style={{ color: "#9ca3af" }}>
+      Analysis results will appear here after you click Analyze.
+    </span>
+  )}
+</div>
                 </div>
             </div>
         </div>
